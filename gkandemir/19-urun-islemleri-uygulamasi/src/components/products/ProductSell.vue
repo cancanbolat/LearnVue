@@ -7,22 +7,50 @@ export default {
       selectedProduct: null,
       product: null,
       product_count: null,
+      saveButtonClick: false,
     };
   },
   computed: {
     ...mapGetters(["getProducts"]),
+    buttonIsActive() {
+      if (this.product_count > 0) {
+        return false;
+      } else {
+        return true;
+      }
+    },
   },
   methods: {
     getSelectedProduct() {
       this.product = this.$store.getters.getProduct(this.selectedProduct)[0];
     },
     save() {
+      this.saveButtonClick = true;
+
       let product = {
         key: this.selectedProduct,
         count: this.product_count,
       };
       this.$store.dispatch("sellProduct", product);
     },
+  },
+  beforeRouteLeave(to, from, next) {
+    if (
+      (this.product_count > 0 || this.selectedProduct !== null) &&
+      !this.saveButtonClick
+    ) {
+      if (
+        confirm(
+          "Kaydedilmemiş değişiklikler olabilir. Çıkmak istediğinize emin misiniz ?"
+        )
+      ) {
+        next();
+      } else {
+        next(false);
+      }
+    } else {
+      next();
+    }
   },
 };
 </script>
@@ -35,6 +63,12 @@ export default {
 
 <template>
   <div class="container">
+    <div class="loading" v-show="saveButtonClick">
+      <div class="lds-ripple">
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <div class="row">
       <div class="col-6 offset-3 pt-3 card mt-5 shadow">
         <div class="card-body">
@@ -89,7 +123,13 @@ export default {
             />
           </div>
           <hr />
-          <button @click="save" class="btn btn-primary">Kaydet</button>
+          <button
+            @click="save"
+            :disabled="buttonIsActive"
+            class="btn btn-primary"
+          >
+            Kaydet
+          </button>
         </div>
       </div>
     </div>

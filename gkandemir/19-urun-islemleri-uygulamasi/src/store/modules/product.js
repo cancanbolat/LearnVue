@@ -71,6 +71,9 @@ const actions = {
                         count: payload.count
                     }
                     dispatch("setTradeResult", tradeResult)
+
+                    //yönlendirme
+                    router.replace("/")
                 })
         }
     },
