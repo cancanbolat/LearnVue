@@ -10,7 +10,9 @@ const getters = {
         return state.products
     },
     getProduct(state) {
-
+        return key => state.products.filter(x => {
+            return x.key == key
+        })
     }
 }
 
@@ -51,8 +53,26 @@ const actions = {
                 router.replace("/")
             })
     },
-    sellProduct({ commit }, payload) {
+    sellProduct({ commit, state, dispatch }, payload) {
+        let product = state.products.filter(element => {
+            return element.key == payload.key
+        })
 
+        if (product) {
+            let totalCount = product[0].count - payload.count;
+            Vue.http.patch("https://vue-product-f3194-default-rtdb.europe-west1.firebasedatabase.app/products/" + payload.key + ".json",
+                { count: totalCount }).then((response) => {
+                    product[0].count = totalCount
+
+                    //alış, satış, bakiye bilgilerinin güncellenmesi
+                    let tradeResult = {
+                        purchase: 0,
+                        sale: product[0].price,
+                        count: payload.count
+                    }
+                    dispatch("setTradeResult", tradeResult)
+                })
+        }
     },
 }
 

@@ -5,6 +5,14 @@ export default {
   computed: {
     ...mapGetters(["getProducts"]),
   },
+  methods: {
+    getCountClasses(count){
+      return {
+        'btn-danger text-white': count == 0,
+        'btn-success text-white': count > 0,
+      }
+    }
+  },
 };
 </script>
 
@@ -32,7 +40,7 @@ export default {
                   <span class="badge badge-info"> {{ product.key }} </span>
                 </td>
                 <td class="align-middle text-center">{{ product.title }}</td>
-                <td class="align-middle text-center">{{ product.count }}</td>
+                <td class="align-middle text-center" :class="getCountClasses(product.count)">{{ product.count }}</td>
                 <td style="width: 120px">{{ product.price | currency }}</td>
                 <td class="align-middle">{{ product.description }}</td>
               </tr>
