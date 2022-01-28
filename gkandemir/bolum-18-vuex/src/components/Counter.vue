@@ -1,19 +1,25 @@
 <template>
   <div>
-    <button class="btn btn-success" @click="incrementCounter">+ Arttır</button>
-    <button class="btn btn-danger" @click="decrementCounter">- Azalt</button>
-    <hr>
-    <button class="btn btn-success" @click="incrementAction">+ Arttır Action</button>
-    <button class="btn btn-danger" @click="decrementAction">- Azalt Action</button>
-    <hr>
-    <button class="btn btn-success" @click="incrementActionAsync">+ Arttır async</button>
+    <button class="btn btn-success" @click="increaseCounter">+ Arttır</button>
+    <button class="btn btn-danger" @click="decreaseCounter">- Azalt</button>
+    <hr />
+    <button class="btn btn-success" @click="incrementAction">
+      + Arttır Action
+    </button>
+    <button class="btn btn-danger" @click="decrementAction">
+      - Azalt Action
+    </button>
+    <hr />
+    <button class="btn btn-success" @click="incrementActionAsync">
+      + Arttır async
+    </button>
   </div>
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex'
+import { mapActions, mapMutations } from "vuex";
 export default {
-  methods : {
+  methods: {
     /* incrementCounter(){
       //this.$emit("counterEvent", 1);
       this.$store.commit("increaseCounter")
@@ -22,17 +28,14 @@ export default {
       //this.$emit("counterEvent", 1);
       this.$store.commit("decreaseCounter")
     }, */
-    ...mapMutations({
-      incrementCounter: 'increaseCounter',
-      decrementCounter: 'decreaseCounter'
-    }),
+    ...mapMutations(["increaseCounter", "decreaseCounter"]),
     ...mapActions({
-      incrementAction: 'increment',
-      decrementAction: 'decrement',
-      incrementActionAsync: 'incAsync'
-    })
-  }
-}
+      incrementAction: "increment",
+      decrementAction: "decrement",
+      incrementActionAsync: "incAsync",
+    }),
+  },
+};
 </script>
 
 <style>
