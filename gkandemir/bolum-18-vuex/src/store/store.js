@@ -8,19 +8,32 @@ export const store = new Vuex.Store({
         counter: 0
     },
     getters: {
-        getDoubleCounter(state){
+        getDoubleCounter(state) {
             return state.counter * 2
         },
-        getCounterClick(state){
+        getCounterClick(state) {
             return state.counter + " kez tıklandı"
         }
     },
     mutations: {
-        increaseCounter(state){
+        increaseCounter(state) {
             return state.counter += 1
         },
-        decreaseCounter(state){
+        decreaseCounter(state) {
             return state.counter -= 1
         },
+    },
+    actions: {
+        increment({ commit }) {
+            commit("increaseCounter")
+        },
+        decrement({ commit }) {
+            commit("decreaseCounter")
+        },
+        incAsync({ commit }) {
+            setTimeout(() => {
+                commit("increaseCounter")
+            }, 2000);
+        }
     }
 })

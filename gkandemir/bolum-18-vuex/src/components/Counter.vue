@@ -2,6 +2,11 @@
   <div>
     <button class="btn btn-success" @click="incrementCounter">+ Arttır</button>
     <button class="btn btn-danger" @click="decrementCounter">- Azalt</button>
+    <hr>
+    <button class="btn btn-success" @click="incrementAction">+ Arttır Action</button>
+    <button class="btn btn-danger" @click="decrementAction">- Azalt Action</button>
+    <hr>
+    <button class="btn btn-success" @click="incrementActionAsync">+ Arttır async</button>
   </div>
 </template>
 
@@ -20,7 +25,16 @@ export default {
     ...mapMutations({
       incrementCounter: 'increaseCounter',
       decrementCounter: 'decreaseCounter'
-    })
+    }),
+    incrementAction(){
+      this.$store.dispatch("increment")
+    },
+    decrementAction(){
+      this.$store.dispatch("decrement")
+    },
+    incrementActionAsync(){
+      this.$store.dispatch("incAsync")
+    },
   }
 }
 </script>
