@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   methods : {
     /* incrementCounter(){
@@ -26,15 +26,11 @@ export default {
       incrementCounter: 'increaseCounter',
       decrementCounter: 'decreaseCounter'
     }),
-    incrementAction(){
-      this.$store.dispatch("increment")
-    },
-    decrementAction(){
-      this.$store.dispatch("decrement")
-    },
-    incrementActionAsync(){
-      this.$store.dispatch("incAsync")
-    },
+    ...mapActions({
+      incrementAction: 'increment',
+      decrementAction: 'decrement',
+      incrementActionAsync: 'incAsync'
+    })
   }
 }
 </script>
